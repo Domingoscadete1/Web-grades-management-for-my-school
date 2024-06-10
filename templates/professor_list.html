@@ -1,0 +1,178 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'IG.icon.ico' %}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Professor</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <h2>DWD <span class="danger">CORP</span> </h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-icons-sharp"> close</span>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <a href="{% url 'home-professor' %}">
+                    <span class="material-icons-sharp">home</span>
+                    <h3>Página Inicial</h3>
+                </a>
+                
+                
+                <a href="{% url 'perfil-professor' %}">
+                    <span class="material-icons-sharp">groups_2</span>
+                    <h3>Perfil</h3>
+                </a>
+                
+                
+                <a href="{% url 'notas_disciplinas_professor' %}">
+                    <span class="material-icons-sharp">diversity_3</span>
+                    <h3>Gerenciar Notas</h3>
+                </a>
+                <a href="{% url 'logout' %}">
+                    <span class="material-icons-sharp">logout</span>
+                    <h3>Terminar sessão</h3>
+                </a>
+            </div>
+        </aside>
+
+        <!-------------- END OF ASIDE ----------------->
+
+        <main>
+
+            <h1>Dashboard</h1>
+
+            <div class="date">
+                <input type="date" id="dataAtual">
+            </div>
+
+            <div class="insights">
+                <!---------------------- END OF DP ------------------------>
+                <div class="wz">
+                    <span class="material-icons-sharp">analytics</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3> Total de Disciplinas</h3>
+                            <h1> {{disciplinas1}}</h1>
+                        </div>
+                    </div>
+                    <small class="text-muted">Do Respectivo Professor</small>
+                </div>
+                <!---------------------- END OF WZ ------------------------>
+                <div class="dc">
+                    <span class="material-icons-sharp">stacked_line_chart</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3> Total de Turmas</h3>
+                            <h1> {{turmas1}} </h1>
+                        </div>
+                    </div>
+                    <small class="text-muted">Do Respectivo Professor</small>
+                </div>
+                <!---------------------- END OF DC ------------------------>
+            </div>
+            <!---------------------- END OF INSIGHTS ------------------------>
+
+            <div class="recent-order">
+                <h2>Tabela das Disciplinas e Turmas do Professor</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            
+                            
+                            <th>Turmas do professor</th>
+                            <th>Disiciplinas do professor</th>
+                           
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <td>
+                            {% for turma in turmas %}
+                            {% if turma.professor_id.id == professores.pk %}
+                            
+                           {{turma.turma_id.nome}} <br>
+                            {% endif %}
+                            
+                            
+                            {% endfor %}
+                        </td>
+
+                    <td>
+                        {% for disciplina in disciplinas %}
+                        
+                        
+                        {{ disciplina.disciplina_id.nome }} <br>
+                        
+                        
+                        
+                        {% endfor %}
+                    </td>
+                    
+                        
+                    </tbody>
+                    </table>
+            </div>
+            
+        </main>
+        <!---------------------- END OF MAIN ------------------------>
+
+        <div class="right">
+            <div class="top">
+                <button id="menu-btn">
+                    <span class="material-icons-sharp">menu</span>
+                </button>
+                <div class="theme-toggler">
+                    <span class="material-icons-sharp active">light_mode</span>
+                    <span class="material-icons-sharp">dark_mode</span>
+                </div>
+                <div class="profile">
+                    <div class="info">
+                        <p>Hey, <b>{{professores.nome}}</b></p>
+                        <small class="text-muted">Professor</small>
+                    </div>
+                    <div class="profile-photo">
+                        <a href="{% url 'perfil-professor' %}">
+                           
+                            <img src="{{professores.foto.url}}">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!---------------------- END OF TOP ------------------------>
+
+        </div>
+    </div>
+
+    <script src="{% static 'yh.js' %}"></script>
+    <script src="{% static 'order.js' %}"></script>
+    <script>
+        function hoje(){
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const todayString = `${year}-${month}-${day}`;
+
+    document.getElementById('dataAtual').value = todayString;
+}
+
+window.onload = hoje;
+    </script>
+
+</body>
+
+</html>

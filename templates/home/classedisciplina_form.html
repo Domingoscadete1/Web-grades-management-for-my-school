@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'IG.icon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'formulario.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <title>Formulário</title>
+</head>
+<body>
+    
+    <div id="page" class="site">
+        <div class="container">
+            <div class="form-box">
+                <div class="progress">
+                    <div class="logo"><a href="#">D<span>W</span>D</a></div>
+                    <ul class="progress-steps">
+                        <li class="step active">
+                            <span>1</span>
+                            <p><br>Pessoal <br> <span>25 secs para completar</span> </p>
+                        </li>
+                    </ul>
+                </div>
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <div class="form-one form-step active">
+                        {{form}}
+                    <div class="btn-group">
+                        <button type="submit" class="btn-submit">Validar</button>
+                    </div>
+                </form>
+                <a onclick="window.history.back()" class="logout-btn">
+                    <span class="material-icons-sharp">west</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="loader-wrapper">
+        <div id="wifi-loader">
+            <svg class="circle-outer" viewBox="0 0 86 86">
+                <circle class="back" cx="43" cy="43" r="40"></circle>
+                <circle class="front" cx="43" cy="43" r="40"></circle>
+                <circle class="new" cx="43" cy="43" r="40"></circle>
+            </svg>
+            <svg class="circle-middle" viewBox="0 0 60 60">
+                <circle class="back" cx="30" cy="30" r="27"></circle>
+                <circle class="front" cx="30" cy="30" r="27"></circle>
+            </svg>
+            <svg class="circle-inner" viewBox="0 0 34 34">
+                <circle class="back" cx="17" cy="17" r="14"></circle>
+                <circle class="front" cx="17" cy="17" r="14"></circle>
+            </svg>
+            <div class="text" data-text="Searching"></div>
+        </div>
+      </div>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+      
+      <script>
+          $(window).on("load",function(){
+            $(".loader-wrapper").fadeOut(2500);
+          });
+      </script>
+    
+
+</body>
+</html>

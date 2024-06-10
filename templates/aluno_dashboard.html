@@ -1,0 +1,240 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'IG.icon.ico' %}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        .red-text {
+            color: red;
+        }
+    </style>
+    
+    <title>Estudante</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <h2>DWD <span class="danger">CORP</span> </h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-icons-sharp"> close</span>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <a href="{% url 'dashboard-aluno' %}">
+                    <span class="material-icons-sharp">home</span>
+                    <h3>Página Inicial</h3>
+                </a>
+                
+                
+                <a href="{% url 'perfil-aluno' %}">
+                    <span class="material-icons-sharp">groups_2</span>
+                    <h3>Perfil</h3>
+                </a>
+                
+                
+                <a href="{% url 'logout' %}">
+                    <span class="material-icons-sharp">logout</span>
+                    <h3>Terminar sessão</h3>
+                </a>
+            </div>
+        </aside>
+
+        <!-------------- END OF ASIDE ----------------->
+
+        <main>
+
+            <h1>Dashboard</h1>
+
+            <div class="date">
+                <input type="date" id="dataAtual">
+            </div>
+
+            <div class="insights">
+                <div class="dp">
+                    <span class="material-icons-sharp">analytics</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3> Total de Disciplinas</h3>
+                            <h1> {{disciplinas1}}</h1>
+                        </div>
+                    </div>
+                    <small class="text-muted">Do Respectivo Estudante</small>
+                </div>
+                <!---------------------- END OF DP ------------------------>
+                <div class="wz">
+                    <span class="material-icons-sharp">groups_2</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3> Turma</h3>
+                            <h1> 
+                                {% for matricula in matriculas %}
+                                
+                                {% for turma in turmas %}
+                                {% if  turma.id == matricula.turma_id.id %}
+                                
+                                        {{turma.nome}}                            
+                                {% endif %}
+                                {% endfor %}
+                                {% endfor %}</h1>
+                        </div>
+                    </div>
+                    <small class="text-muted">Do Respectivo Estudante</small>
+                </div>
+                <!---------------------- END OF WZ ------------------------>
+                
+                <!---------------------- END OF DC ------------------------>
+            </div>
+            <!---------------------- END OF INSIGHTS ------------------------>
+
+            <div class="recent-order">
+                <h2>Boletim do Estudante</h2>
+                <div class="filter-dropdown">
+                    <button class="dropdown-button" type="submit">Filtrar </button>
+                    <div class="dropdown-content">
+                <form method="get" action="{% url 'dashboard-aluno' %}">
+                    <label for="trimestre">Selecione o Trimestre:</label>
+                    <select name="trimestre" id="trimestre">
+                        
+                        {% for trimestre in trimestres %}
+                            <option value="{{ trimestre }}" {% if trimestre == trimestre_selecionado %}selected{% endif %} >{{ trimestre }}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="dropdown-button" type="submit">Filtrar </button>
+                    
+                </form> 
+            </div>
+        </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Disciplinas</th>
+                            <th>N1</th>
+                            <th>N2</th>
+                            <th>N3</th>
+                            <th>MT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for matricula in matriculas %}
+                            {% if matricula.aluno_id.id == aluno.pk %}
+                                {% for turma in turmas %}
+                                    {% if turma.id == matricula.turma_id.id %}
+                                        {% if turma.curso_id %}
+                                            {% for curso_disciplina in curso_disciplinas %}
+                                                {% if curso_disciplina.curso_id.id == turma.curso_id.id %}
+                                                    <tr>
+                                                        <td>{{ curso_disciplina.disciplina_id.nome }}</td>
+                                                        {% for nota in notas %}
+                                                            {% if nota.aluno_id.id == aluno.pk and nota.disciplina_id.id == curso_disciplina.disciplina_id.id %}
+                                                                <td class="{% if nota.valor < 10 %}red-text{% endif %}">{{ nota.valor }}</td>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        {% if notas|length == 0 %}
+                                                            <td colspan="4">Sem Nota</td>
+                                                        {% endif %}
+                                                        {% for disciplina_id, media in medias_disciplinas.items %}
+                                                            {% if disciplina_id == curso_disciplina.disciplina_id.id %}
+                                                                <td class="{% if media < 10 %}red-text{% endif %}">{{ media|floatformat:"2" }}</td>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </tr>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% else %}
+                                            {% for classe in classes %}
+                                                {% if matricula.classe_id.id == classe.id %}
+                                                    {% for disciplina in disciplinas %}
+                                                        {% if disciplina.classe_id.id == classe.id %}
+                                                            <tr>
+                                                                <td>{{ disciplina.disciplina_id.nome }}</td>
+                                                                {% for nota in notas %}
+                                                                    {% if nota.aluno_id.id == aluno.pk and nota.disciplina_id.id == disciplina.disciplina_id.id %}
+                                                                        <td class="{% if nota.valor < 10 %}red-text{% endif %}">{{ nota.valor }}</td>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                                {% if notas|length == 0 %}
+                                                                    <td colspan="4">Sem Nota</td>
+                                                                {% endif %}
+                                                                {% for disciplina_id, media in medias_disciplinas.items %}
+                                                                    {% if disciplina_id == disciplina.disciplina_id.id %}
+                                                                        <td class="{% if media < 10 %}red-text{% endif %}">{{ media|floatformat:"2" }}</td>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            </tr>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+            </table>
+                        
+                
+            
+        </main>
+        <!---------------------- END OF MAIN ------------------------>
+
+        <div class="right">
+            <div class="top">
+                <button id="menu-btn">
+                    <span class="material-icons-sharp">menu</span>
+                </button>
+                <div class="theme-toggler">
+                    <span class="material-icons-sharp active">light_mode</span>
+                    <span class="material-icons-sharp">dark_mode</span>
+                </div>
+                <div class="profile">
+                    <div class="info">
+                        <p>Hey, <b>{{aluno.nome}}</b></p>
+                        <small class="text-muted">Estudante</small>
+                    </div>
+                    <div class="profile-photo">
+                        <a href="{% url 'perfil-aluno' %}">
+                           
+                            <img src="{{aluno.foto.url}}">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!---------------------- END OF TOP ------------------------>
+            
+        </div>
+    </div>
+
+    <script src="{% static 'yh.js' %}"></script>
+    <script src="{% static 'order.js' %}"></script>
+
+    <script>
+        function hoje(){
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const todayString = `${year}-${month}-${day}`;
+
+    document.getElementById('dataAtual').value = todayString;
+}
+
+window.onload = hoje;
+
+
+    </script>
+
+</body>
+
+</html>

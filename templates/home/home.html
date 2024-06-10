@@ -1,0 +1,179 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'logo.png' %}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'page.css' %}">
+    <title>Página Inicial</title>
+</head>
+
+<body>
+
+    <section class="header">
+        <nav>
+            <a href="pag.html"><img src="{% static 'logo.png' %}" alt="logo"></a>
+
+            <div class="nav-links" id="navLinks">
+
+                <span class="material-icons-sharp" onclick="hideMenu()"> close</span>
+
+                <ul>
+                    <li><a href="{% url 'home' %}">Página Inicial</a></li>
+                    <li><a href="#facilities">Lugares</a></li>
+                    <li><a href="#course">Ensinos</a></li>
+                    <li><a href="#footer-content">Contacto</a></li>
+                    <li><a href="{% url 'login' %}">Entrar</a></li>
+                </ul>
+            </div>
+
+            <span class="material-icons-sharp" onclick="showMenu()"> dehaze</span>
+        </nav>
+
+        <div class="text-box">
+            <h1>Complexo Escolar Mona Tower</h1>
+            <p>Nossa missão é proporcionar uma educação de qualidade, formando cidadãos preparados <br> para os desafios
+                futuros...</p>
+
+            <a href="#footer-content" class="hero-btn">Contacta-nos</a>
+        </div>
+
+
+
+    </section>
+
+    <!--------------------- CURSOS ------------------------>
+
+    <section class="course" id="course">
+
+        <h1>Sobre Nossos Ensinos</h1>
+        <p>Nossos ensinos são projectados para fornecer uma educação completa e de qualidade</p>
+
+        <div class="row">
+            <div class="course-col">
+                <h3>Ensino Fundamental</h3>
+                <p>O nosso foco é desenvolver as habilidades básicas em leitura, escrita, matemática
+                   e ciências, além de actividades extracurriculares que promovem a criatividade e o trabalho em equipe.
+                </p>
+            </div>
+            <div class="course-col">
+                <h3>Ensino Médio</h3>
+                <p> O nosso programa completo de ensino médio abrange todas as disciplinas obrigatórias, 
+                    preparando os estudantes para o vestibulares combinando o currículo do ensino médio com formações
+                    técnicas em áreas como informática, administração, eletrônica, etc...
+                </p>
+            </div>
+            <div class="course-col">
+                <h3>Actividades Extracurriculares</h3>
+                <p>Na nossa Escola, acreditamos que a educação vai além da sala de aula. Por isso oferecemos uma 
+                    variedade de actividades extracurriculares que complementam o aprendizado acadêmico e ajudam 
+                    no desenvolvimento integrado dos estudantes.
+                </p>
+            </div>
+        </div>
+
+    </section>
+
+    <!--------------------- CAMPUS ------------------------>
+
+    <section class="campus" id="campus">
+
+        <h1>Nossa Escola</h1>
+        <p>Venha nos visitar e descubra tudo o que a nossa escola pode oferecer</p>
+
+        <div class="row">
+            <div class="campus-col">
+                <img src="{% static 'WhatsApp Image 2024-06-06 at 22.39.45 (1).jpeg' %}">
+            </div>
+
+            <div class="campus-col">
+                <img src="{% static 'WhatsApp Image 2024-06-06 at 22.39.39.jpeg' %}">
+            </div>
+
+            <div class="campus-col">
+                <img src="{% static 'WhatsApp Image 2024-06-06 at 22.39.45 (1).jpeg' %}">
+            </div>
+        </div>
+
+    </section>
+
+    <!--------------------- FACILITIES ------------------------>
+
+    <section class="facilities" id="facilities">
+
+        <h1>Lugares da Escola</h1>
+        <p>Valorizamos a participação activa dos estudantes dentro da escola, construindo um ambiente de cooperação, respeito e apoio mútuo </p>
+
+        <div class="row">
+            <div class="facilities-col">
+                <img src="{% static 'WhatsApp Image 2024-06-06 at 22.39.38.jpeg' %}" alt="">
+
+                <h3>Pátio</h3>
+                <p>Nosso pátio é cuidadosamente planejado para ser um lugar onde os estudantes se sintam à vontade e possam interagir livremente.</p>
+            </div>
+    
+            <div class="facilities-col">
+                <img src="{% static 'WhatsApp Image 2024-06-06 at 22.39.40.jpeg' %}" alt="">
+
+                <h3>Refeitório</h3>
+                <p>Nosso refeitório é projectado para ser acolhedor e confortável, com mesas e cadeiras adequadas para todas as idades.</p>
+            </div>
+        
+            <div class="facilities-col">
+                <img src="{% static 'WhatsApp Image 2024-06-06 at 22.39.41.jpeg' %}" alt="">
+
+                <h3>Secretaria</h3>
+                <p>Nossa secretaria é composta por uma equipe de profissionais qualificados, para atender com eficiência e cordialidade.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!--------------------- FACILITIES ------------------------>
+
+    <section class="cta">
+
+        <h1>Curiosidades da Nossa Escola</h1>
+
+        <h4>Nossa escola tem uma rica história e várias curiosidades que a tornam um lugar único e especial...</h4>
+        <a href="" class="hero-btn">Visite-nos para saber mais</a>
+
+    </section>
+
+    <!--------------------- FOOTER ------------------------>
+
+    <footer>
+        <div class="footer-content" id="footer-content">
+            <h3>Contacte-nos</h3>
+            <p>Endereço: Talatona, Bairro Futungo</p>
+            <p>Email: monatower@gmail.com</p>
+            <p>Telefones: 926-364-622 // 993-587-445 </p>
+        </div>
+    </footer>
+
+    <!--------------------- JavaScript ------------------------>
+
+    <script>
+
+        var navLinks = document.getElementById("navLinks");
+
+        function showMenu() {
+
+            navLinks.style.right = "0";
+        }
+
+        function hideMenu() {
+
+            navLinks.style.right = "-200px";
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,20 @@
+{{error}}
+{% for matricula in matriculas %}
+{% if turma == matricula.turma_id.nome %}
+{{matricula.aluno_id.nome}}
+{% for nota in notas %}
+{% if matricula.aluno_id.nome == nota.aluno_id.nome %}
+{{nota.valor}}
+
+
+
+{% endif %}
+
+{% endfor %}
+
+{% endif %}
+
+
+
+
+{% endfor %}

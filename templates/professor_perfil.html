@@ -1,0 +1,172 @@
+{% if professores %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'IG.icon.ico' %}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style-perfil.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Professor</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <h2>DWD <span class="danger">CORP</span> </h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-icons-sharp"> close</span>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <a href="{% url 'home-professor' %}">
+                    <span class="material-icons-sharp">home</span>
+                    <h3>Página Inicial</h3>
+                </a>
+                
+                
+                <a href="{% url 'perfil-professor' %}">
+                    <span class="material-icons-sharp">groups_2</span>
+                    <h3>Perfil</h3>
+                </a>
+                
+                
+                <a href="{% url 'notas_disciplinas_professor' %}">
+                    <span class="material-icons-sharp">diversity_3</span>
+                    <h3>Gerenciar Notas</h3>
+                </a>
+                <a href="{% url 'logout' %}">
+                    <span class="material-icons-sharp">logout</span>
+                    <h3>Terminar sessão</h3>
+                </a>
+            </div>
+        </aside>
+
+        <!-------------- END OF ASIDE ----------------->
+
+        <main>
+
+            <h1>Dashboard</h1>
+
+            <div class="date">
+                <input type="date" id="dataAtual">
+            </div>
+
+            <!---------------------- END OF INSIGHTS ------------------------>
+
+            <div class="profile-container">
+                <div class="main-content">
+                    <div class="profile-header">
+                        <h1> <a href="{% url 'update-professor' professores.pk %}" class='btn'>Perfil</a></h1>
+                        
+                       
+                    
+                        <a href="{% url 'password_change' %}" class="menu__link">Trocar senha</a>
+                        <a href="{% url 'email_change' %}" class="menu__link">Trocar email</a>
+                    </div>
+
+                    <div class="profile-details">
+                        <img src="{{professores.foto.url}}" class="profile-pic">
+                        <div class="info">
+                            <h2><a href="{% url 'update-professor' professores.pk %}" class='btn'>{{professores.nome}}</a></h2>
+                            <p>Professor : {{professores.nome}}</p>
+                            <p>Bi: {{professores.bi}} </p>
+                            <p>Estado Civil: {{professores.estado_civil}}</p>
+                            <p>Genero: {{professores.genero}} </p>
+                            <p>Formação: {{professores.nivel_escolaridade}} </p>
+                        </div>
+                        <div class="info">
+                            
+                            <p>Nacionalidade: {{professores.nacionalidade}}</p>
+                            
+                            
+                        </div>
+                    </div>
+                    <div class="additional-info">
+                        <div class="contract-details">
+                            <h3>Contract Details</h3>
+                            <p>Worker Type: Professor </p>
+                            <p>Team: </p>
+                            <p>Role: </p>
+                        </div>
+                        <div class="account-information">
+                            <h3>Account Information</h3>
+                            <p>Account Email: </p>
+                            <p>Email Status: </p>
+                            <p>Profile ID: {{professores.pk}} </p>
+                        </div>
+                    </div>
+                    <div class="additional-info">
+                        <div class="contract-details">
+                            <h3>Contract Details</h3>
+                            <p>Worker Type: Professor </p>
+                            <p>Team: </p>
+                            <p>Role: </p>
+                        </div>
+                        <div class="account-information">
+                            <h3>Account Information</h3>
+                            <p>Account Email: </p>
+                            <p>Email Status: </p>
+                            <p>Profile ID: {{professores.pk}} </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!---------------------- END OF MAIN ------------------------>
+
+        <div class="right">
+            <div class="top">
+                <button id="menu-btn">
+                    <span class="material-icons-sharp">menu</span>
+                </button>
+                <div class="theme-toggler">
+                    <span class="material-icons-sharp active">light_mode</span>
+                    <span class="material-icons-sharp">dark_mode</span>
+                </div>
+                <div class="profile">
+                    <div class="info">
+                        <p>Hey, <b>{{professores.nome}}</b></p>
+                        <small class="text-muted">Professor</small>
+                    </div>
+                    <div class="profile-photo">
+                        <a href="{% url 'perfil-professor' %}">
+                           
+                            <img src="{{professores.foto.url}}">
+                        </a>
+                        
+                    </div>
+                </div>
+            </div>
+            <!---------------------- END OF TOP ------------------------>
+
+        </div>
+    </div>
+
+    <script src="{% static 'yh.js' %}"></script>
+    <script>
+        function hoje(){
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const todayString = `${year}-${month}-${day}`;
+
+    document.getElementById('dataAtual').value = todayString;
+}
+
+window.onload = hoje;
+    </script>
+
+</body>
+
+</html>
+{% endif %}

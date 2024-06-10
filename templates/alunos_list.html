@@ -1,0 +1,215 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'IG.icon.ico' %}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Admin</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <h2>DWD <span class="danger">CORP</span> </h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-icons-sharp"> close</span>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <a href="{% url 'admin-dashboard' %}">
+                    <span class="material-icons-sharp">home</span>
+                    <h3>Página Inicial</h3>
+                </a>
+                <a href="{% url 'admin-dashboard-turmas' %}" class="active">
+                    <span class="material-icons-sharp">fact_check</span>
+                    <h3>Turmas</h3>
+                </a>
+                <a href="{% url 'admin-dashboard-classes' %}">
+                    <span class="material-icons-sharp">receipt_long</span>
+                    <h3>Classes</h3>
+                </a>
+                <a href="{% url 'admin-dashboard-classes' %}">
+                    <span class="material-icons-sharp">groups_2</span>
+                    <h3>Professores</h3>
+                </a>
+                <a href="{% url 'admin-dashboard-disciplinas' %}">
+                    <span class="material-icons-sharp">summarize</span>
+                    <h3>Disciplinas</h3>
+                </a>
+                <a href="{% url 'admin-dashboard-curso' %}">
+                    <span class="material-icons-sharp">school</span>
+                    <h3>Cursos</h3>
+                </a>
+                <a href="{% url 'admin-dashboard-alunos' %}">
+                    <span class="material-icons-sharp">diversity_3</span>
+                    <h3>Alunos</h3>
+                </a>
+                <a href="{% url 'logout' %}">
+                    <span class="material-icons-sharp">logout</span>
+                    <h3>Terminar sessão</h3>
+                </a>
+            </div>
+        </aside>
+
+        <!-------------- END OF ASIDE ----------------->
+
+        <main>
+
+            <h1>Dashboard</h1>
+
+            <div class="date">
+                <input type="date" id="dataAtual">
+            </div>
+
+            <div class="insights">
+                <div class="dp">
+                    <span class="material-icons-sharp">groups_2</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3> Total De Alunos</h3>
+                            <h1> {{matriculas1.count}}</h1>
+                        </div>
+                    </div>
+                    <small class="text-muted">Da Respectiva Turma</small>
+                </div>
+                <!---------------------- END OF DP ------------------------>
+                
+                <!---------------------- END OF WZ ------------------------>
+                
+                <!---------------------- END OF DC ------------------------>
+            </div>
+            <!---------------------- END OF INSIGHTS ------------------------>
+
+            <div class="recent-order">
+                <h2>Tabela dos Alunos da Turma {{turma.nome}}</h2>
+
+                <div class="links"> 
+                    <a href="{% url 'create-aluno'  %}" class="menu__link">Criar Aluno</a>
+                </div>
+                 
+                <table id="mytable">
+                    
+                    {%if matriculas %}
+                    
+                        <thead>
+                            <tr>
+                                <th>ID do Aluno</th>
+                                <th>ID da Matricula</th>
+                                <th>Nome Do Aluno</th>
+                    
+                                
+                                <th>Idade Do Aluno</th>
+                                <th>Data Nascimento</th>
+                                <th>Acções</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            {% for matricula in matriculas %}
+                            <tr>
+                    {% if matricula.turma_id.nome == turma.nome%}
+                    <td>
+                        {{matricula.aluno_id.id}}
+                    </td>
+                    <td>
+                        <a href="{% url 'matricula-update' matricula.id %}">{{matricula.id}}</a>
+                        
+                    </td>
+                     
+                     <td>
+                        <a href="{% url 'update-aluno' matricula.aluno_id.id %}">{{matricula.aluno_id.nome}}</a>
+                     </td>
+                     <td>
+                        {{matricula.aluno_id.idade}}
+                    </td>
+                    <td>
+                        {{matricula.aluno_id.data_nascimento}}
+                    </td>
+                    <td>
+                        <a href="{% url 'delete-aluno' matricula.aluno_id.id %}" style="color: rgba(240, 58, 58, 0.741);">Apagar</a>
+                    </td>
+                     
+
+
+{% endif %}
+</tr>
+{% endfor %}
+
+                        </tbody>
+                        
+                            
+                    {% else %}
+                    <h1>Nenhuma disciplina cadastrada</h1>
+                    {%endif%}
+                </table>
+                <script>
+                    var table=document.getElementById("mytable")
+                    var cells=table.getElementsByTagName("td")
+                    for(var i=0;i<cells.length;i++){
+                        if(cells[i].textContent==""){
+                            cells[i].textContent="Null"
+                        }
+                    }
+                </script>
+                
+            </div>
+
+
+        </main>
+        <!---------------------- END OF MAIN ------------------------>
+
+        <div class="right">
+            <div class="top">
+                <button id="menu-btn">
+                    <span class="material-icons-sharp">menu</span>
+                </button>
+                <div class="theme-toggler">
+                    <span class="material-icons-sharp active">light_mode</span>
+                    <span class="material-icons-sharp">dark_mode</span>
+                </div>
+                <div class="profile">
+                    <div class="info">
+                        <p>Hey, <b>{{user.username}}</b></p>
+                        <small class="text-muted">Admin</small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="{% static 'vista-de-3d-jovem-estudante-de-escola_23-2151103679.avif' %}">
+                    </div>
+                </div>
+            </div>
+            <!---------------------- END OF TOP ------------------------>
+
+        </div>
+    </div>
+
+    <script src="{% static 'yh.js' %}"></script>
+    <script src="{% static 'order.js' %}"></script>
+
+    <script>
+        function hoje(){
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const todayString = `${year}-${month}-${day}`;
+
+    document.getElementById('dataAtual').value = todayString;
+}
+
+window.onload = hoje;
+    </script>
+
+</body>
+
+</html>

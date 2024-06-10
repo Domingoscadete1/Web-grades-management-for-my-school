@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'IG.icon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'login.css' %}">
+    <title>Cadastro</title>
+</head>
+<body>
+    
+    <div id="page" class="site">
+        <div class="container">
+            <div class="wrapper">
+                <div class="signup">
+                    <div class="content-heading">
+                        <div class="y-style">
+                            <div class="logo"><a href="#">D<span>W</span>D</a></div>
+                            <div class="welcome">
+                                <h2>Bem-vindo<br> ao CEMT!! </h2><br>
+                                <p>Estude hoje para conquistar amanhã.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-form">
+                        <div class="y-style">
+                            <form action="{%url 'cadastro' %}" method="POST">{% csrf_token %}
+                                <p>
+                                    <label>Nome Completo</label>
+                                    <input type="text" placeholder="digite o nome..." name="username" required>
+                                </p>
+                                <p>
+                                    <label>Email</label>
+                                    <input type="email" placeholder="digite o email..." name="email" required>
+                                </p>
+                                <p>
+                                    <label>Senha</label>
+                                    <input type="password" placeholder="digite a senha..." name="senha" required>
+                                </p>
+                                <p class="checkbox" required>
+                                    <label for="terms">Professor</label>
+                                    <input type="checkbox" id="terms" name="is_teacher" ><br>
+                                    <label for="terms">Estudante</label>
+                                    <input type="checkbox" id="terms" name="is_student">
+                                    
+                                </p>
+                                <p class="forgot"><a href="{% url 'login' %}">Fazer Login</a></p>
+
+                                <p><button type="submit">Cadastrar</button></p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

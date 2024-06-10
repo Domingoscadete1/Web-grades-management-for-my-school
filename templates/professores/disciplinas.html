@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'IG.icon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'formulario.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <title>Formulário</title>
+</head>
+
+<body>
+
+    <div id="page" class="site">
+        <div class="container">
+            <div class="form-box">
+                <div class="progress">
+                    <div class="logo"><a href="#">D<span>W</span>D</a></div>
+                    <ul class="progress-steps">
+                        <li class="step active">
+                            <span>1</span>
+                            <p><br>Pessoal <br> <span>25 secs para completar</span> </p>
+                        </li>
+                    </ul>
+                </div>
+
+                <form action="{% url 'alunos-da-turma' %}" method="post">
+                    <h1>Selecionar Turma e Disciplina</h1>
+                    {% csrf_token %}
+                    <label for="turma">Turma:</label>
+                    <select name="turma" id="turma">
+                        {% for turma in turmas %}
+                        {% if professores.pk == turma.professor_id.id %}
+                        <option value="{{ turma.turma_id.nome }}">{{ turma.turma_id.nome }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select><br>
+
+                    <label for="disciplina">Disciplina:</label>
+                    <select name="disciplina" id="disciplina">
+                        {% for disciplina in disciplinas %}
+                        {% if professores.pk == disciplina.professor_id.id %}
+                        <option value="{{ disciplina.disciplina_id.nome }}">{{ disciplina.disciplina_id.nome }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+
+                    <div class="btn-group">
+                        <button type="submit" class="btn-submit">Selecionar</button>
+                    </div>
+                    
+                </form>
+                <a onclick="window.history.back()" class="logout-btn">
+                    <span class="material-icons-sharp">west</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+</html>

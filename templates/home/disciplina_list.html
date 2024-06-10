@@ -1,0 +1,268 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'IG.icon.ico' %}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+   
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'modal.css' %}">
+    
+    <title>Admin</title>
+
+    
+</head>
+
+<body>
+
+    <div class="container">
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <h2>DWD <span class="danger">CORP</span> </h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-icons-sharp"> close</span>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <a href="{% url 'admin-dashboard' %}">
+                    <span class="material-icons-sharp">home</span>
+                    <h3>Página Inicial</h3>
+                </a>
+                <a href="{% url 'admin-dashboard-turmas' %}" class="active">
+                    <span class="material-icons-sharp">fact_check</span>
+                    <h3>Turmas</h3>
+                </a>
+                <a href="{% url 'admin-dashboard-classes' %}">
+                    <span class="material-icons-sharp">receipt_long</span>
+                    <h3>Classes</h3>
+                </a>
+                <a href="{% url 'admin-dashboard-classes' %}">
+                    <span class="material-icons-sharp">groups_2</span>
+                    <h3>Professores</h3>
+                </a>
+                <a href="{% url 'admin-dashboard-disciplinas' %}">
+                    <span class="material-icons-sharp">summarize</span>
+                    <h3>Disciplinas</h3>
+                </a>
+                <a href="{% url 'admin-dashboard-curso' %}">
+                    <span class="material-icons-sharp">school</span>
+                    <h3>Cursos</h3>
+                </a>
+                <a href="{% url 'admin-dashboard-alunos' %}">
+                    <span class="material-icons-sharp">diversity_3</span>
+                    <h3>Alunos</h3>
+                </a>
+                
+                <a href="{% url 'logout' %}">
+                    <span class="material-icons-sharp">logout</span>
+                    <h3>Terminar sessão</h3>
+                </a>
+            </div>
+        </aside>
+
+        <!-------------- END OF ASIDE ----------------->
+
+        <main>
+            
+            <h1>Dashboard</h1>
+
+            <div class="date">
+                <input type="date" id="dataAtual">
+            </div>
+
+            <div class="insights">
+                <div class="dp">
+                    <span class="material-icons-sharp">analytics</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3> Total de Disciplinas</h3>
+                            <h1> {{disciplinas.count}}</h1>
+                        </div>
+                    </div>
+                    <small class="text-muted">Da Respectiva Tabela</small>
+                </div>
+                <!---------------------- END OF DP ------------------------>
+                <div class="wz">
+                    <span class="material-icons-sharp">bar_chart</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3> Total de Professores</h3>
+                            <h1> {{professores1.count}}</h1>
+                        </div>
+                    </div>
+                    <small class="text-muted">Da Respectiva Tabela</small>
+                </div>
+                <!---------------------- END OF WZ ------------------------>
+                <div class="dc">
+                    <span class="material-icons-sharp">stacked_line_chart</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3> Total de Classes</h3>
+                            <h1> {{classes1.count}} </h1>
+                        </div>
+                    </div>
+                    <small class="text-muted">Da Respectiva Tabela</small>
+                </div>
+                <!---------------------- END OF DC ------------------------>
+                
+            </div>
+            <!---------------------- END OF INSIGHTS ------------------------>
+               
+
+            <div class="recent-order">
+                <h2>Tabela das Disciplinas</h2>
+                <table id="mytable">
+                    
+                    {%if page %}
+                    
+                        <thead>
+                            <div class="links">
+                                
+                               
+                                <a href="{%url 'create-disciplina'%}" class="menu__link">Criar Disciplina</a>
+                                <a href="{%url 'create-disciplina-curso'%}" class="menu__link">Adicionar disciplina a um curso</a>
+                                <a href="{%url 'create-disciplina-classe'%}" class="menu__link">Adicionar classe a uma disciplina</a>
+                                
+                            </div>
+                            <tr>
+                                <th>ID da disciplina</th>
+                                <th>Nome Da disciplina</th>
+                    
+                                
+                                <th>Professores</th>
+                                <th>Classes</th>
+
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for disciplina in page.object_list %}
+                                <tr>
+                                    <td>{{ disciplina.pk|default:"ID não disponível" }}</td>
+                                    <td><a href="{% url 'update-disciplina' disciplina.pk %}">
+                                        {{ disciplina.nome|default:"Nome da disciplina não disponível" }}
+
+                                    </a>
+                                        
+                                    </td>
+                        
+                                    <td>
+                                        {% for professor in professores %}
+                                            {% if disciplina.pk == professor.disciplina_id.id %}
+                                                {{ professor.professor_id.nome}}
+                                               
+                                            {% endif %}
+                                        {% endfor %}
+                                        
+                                    </td>
+                        
+                                    <td>
+                                        {% for classe in classes %}
+                                            {% if disciplina.pk == classe.disciplina_id.id %}
+                                                {{ classe.classe_id.nome }}
+                                               
+                                            {% endif %}
+                                        {% endfor %}
+                                        
+                                    </td>
+                        
+                                    <td>
+                                        <a href="{% url 'delete-disciplina' disciplina.pk %}" class="btn" style="color: red;">Apagar</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                  
+                    {% else %}
+                    <h1>Nenhuma disciplina cadastrada</h1>
+                    {%endif%}
+                </table>
+                
+                <div class="links">
+                    {% if page.has_previous %}
+                                <a href="{% url 'admin-dashboard-disciplinas'  %}?page={{page.previous_page_number}}" class="menu__link">Página Anterior</a>
+               
+                {% endif %}
+                {% if page.has_next %}
+                <a href="{% url 'admin-dashboard-disciplinas'  %}?page={{page.next_page_number}}" class="menu__link">Próxima Página</a>
+                
+                {% endif %}
+                </div>
+
+                <script>
+                    var table=document.getElementById("mytable")
+                    var cells=table.getElementsByTagName("td")
+                    for(var i=0;i<cells.length;i++){
+                        if(cells[i].textContent==""){
+                            cells[i].textContent="Null"
+                        }
+                    }
+                </script>
+                
+                
+            </div>
+            
+            <div class="modal fade"></div>
+
+        </main>
+        <!---------------------- END OF MAIN ------------------------>
+        
+
+        <div class="right">
+            <div class="top">
+                <button id="menu-btn">
+                    <span class="material-icons-sharp">menu</span>
+                </button>
+                <div class="theme-toggler">
+                    <span class="material-icons-sharp active">light_mode</span>
+                    <span class="material-icons-sharp">dark_mode</span>
+                </div>
+                <div class="profile">
+                    <div class="info">
+                        <p>Hey, <b>{{user.username}}</b></p>
+                        <small class="text-muted">Admin</small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="{% static 'vista-de-3d-jovem-estudante-de-escola_23-2151103679.avif' %}">
+                    </div>
+                </div>
+            </div>
+            <!---------------------- END OF TOP ------------------------>
+
+           
+            <!---------------------- END OF TOP ------------------------>
+             
+
+        </div>
+    </div>
+    
+
+    <script src="{% static 'yh.js' %}"></script>
+    <script src="{% static 'order.js' %}"></script>
+    <script src="{% static 'modalUser.js' %}"></script>
+
+    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+
+    <script>
+        function hoje(){
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const todayString = `${year}-${month}-${day}`;
+
+    document.getElementById('dataAtual').value = todayString;
+}
+
+window.onload = hoje;
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="IG.icon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="formulario.css">
+    <title>Formulário</title>
+</head>
+<body>
+    
+    <div id="page" class="site">
+        <div class="container">
+            <div class="form-box">
+                <div class="progress">
+                    <div class="logo"><a href="#">D<span>W</span>D</a></div>
+                    <ul class="progress-steps">
+                        <li class="step active">
+                            <span>1</span>
+                            <p><br>Pessoal <br> <span>25 secs para completar</span> </p>
+                        </li>
+                        <li class="step">
+                            <span>2</span>
+                            <p><br>Contacto <br> <span>60 secs para completar</span> </p>
+                        </li>
+                        <li class="step">
+                            <span>3</span>
+                            <p><br>Segurança <br> <span>30 secs para completar</span> </p>
+                        </li>
+                    </ul>
+                </div>
+                <form action="">
+                    <div class="form-one form-step active">
+                        <div class="bg-svg"></div>
+                        <h2>Informações Pessoais</h2>
+                        <p>Introduza os dados correctamente</p>
+                        
+                        <div>
+                            <label>Foto</label>
+                            <input type="file" required>
+                        </div>
+                        <div>
+                            <label>Nome Completo</label>
+                            <input type="text" placeholder="digite o seu nome..." required>
+                        </div>
+                        <div>
+                            <label>Género</label>
+                            <select>
+                                <option value="masculino">Masculino</option>
+                                <option value="feminino">Feminino</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Nº BI</label>
+                            <input type="text" placeholder="digite o nº do bi..." required>
+                        </div>
+                        <div>
+                            <label>Estado Civil</label>
+                            <select>
+                                <option value="solteiro">Solteiro/a</option>
+                                <option value="casado">Casado/a</option>
+                                <option value="viuva">Viúvo/a</option>
+                                <option value="divorciado">Divorciado/a</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Nacionalidade</label>
+                            <input type="text" placeholder="digite a nacionalidade..." required>
+                        </div>
+                        <div class="birth">
+                            <label>Data de Nascimento</label>
+                            <div class="grouping">
+                                <input type="text" pattern="[0-9]*" name="day" min="0" max="31" placeholder="DD" required>
+                                <input type="text" pattern="[0-9]*" name="month" min="0" max="12" placeholder="MM" required>
+                                <input type="text" pattern="[0-9]*" name="year" min="0" max="2050" placeholder="YYYY" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-two form-step">
+                        <div class="bg-svg"></div>
+                        <h2>Informações Adicionais</h2>
+                        <div>
+                            <label>Telefone</label>
+                            <input type="tel" placeholder="xxx xxx xxx" required>
+                        </div>
+                        <div>
+                            <label>Morada</label>
+                            <input type="text" placeholder="digite a morada..." required>
+                        </div>
+                        <div>
+                            <label>Nível de Escolaridade</label>
+                            <input type="text" placeholder="digite o nível..." required>
+                        </div>
+                        <div>
+                            <label>Habilitações</label>
+                            <input type="text" placeholder="digite as habilitações..." required>
+                        </div>
+                        <div>
+                            <label>Obs</label>
+                            <input type="text" placeholder="obs..." required>
+                        </div>
+                    </div>
+                    <div class="form-three form-step">
+                        <div class="bg-svg"></div>
+                        <h2>Segurança</h2>
+                        <div>
+                            <label>Email</label>
+                            <input type="email" placeholder="digite o email" required>
+                        </div>
+                        <div>
+                            <label>Apelido</label>
+                            <input type="text" placeholder="digite o apelido..." required>
+                        </div>
+                        <div>
+                            <label>Senha</label>
+                            <input type="password" placeholder="digite a senha..." required>
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn-prev" disabled>Voltar</button>
+                        <button type="button" class="btn-next">Seguinte</button>
+                        <button type="submit" class="btn-submit">Validar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="yh.js"></script>
+
+</body>
+</html>

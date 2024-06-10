@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'IG.icon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'formulario.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+   
+    <title>Formulário</title>
+</head>
+<body>
+    
+    <div id="page" class="site">
+        <div class="container">
+            <div class="form-box">
+                <div class="progress">
+                    <div class="logo"><a href="#">D<span>W</span>D</a></div>
+                    <ul class="progress-steps">
+                        <li class="step active">
+                            <span>1</span>
+                            <p><br>Pessoal <br> <span>25 secs para completar</span> </p>
+                        </li>
+                    </ul>
+                </div>
+                
+                {{error}}
+                
+                <form action="{% url 'alunos_da_turma_nota' %}" method="post">
+                    <h1>Selecionar aluno</h1>
+                    <div class="form-one form-step active">
+                        {% csrf_token %}
+                        <label for="turma">Aluno:</label>
+                        <select name="aluno" id="aluno" required>
+                            {% for matricula in matriculas %}
+                                {% if turma == matricula.turma_id.nome %}
+                                    <option value="{{matricula.aluno_id.nome}}">{{matricula.aluno_id.nome}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select><br>
+                        <label for="tipo">Tipo prova:</label>
+                        <select name="tipo" id="tipo" required>
+                            <option value="Escrita">Escrita</option>
+                            <option value="Oral">Oral</option>
+                            <option value="Pratica">Pratica</option>
+                            <option value="Defesa_trabalho">Defesa_trabalho</option>
+                        </select><br>
+                        <label for="trimestre">Trimestre:</label>
+                        <select name="trimestre" id="trimestre" required>
+                            <option value="Primeiro trimestre">Primeiro trimestre</option>
+                            <option value="Segundo trimestre">Segundo trimestre</option>
+                            <option value="Terceiro trimestre">Terceiro trimestre</option>
+                        </select><br>
+                        <label for="valor">Valor</label>
+                        <input type="number" name="valor" required><br>
+                        <label for="data">Data prova</label>
+                        <input type="date" name="data" required><br>
+                        <label for="disciplina">Disciplina</label>
+                        <input name="disciplina" value="{{disciplina}}" readonly><br>
+                        <label for="turma">Turma</label>
+                        <input name="turma" value="{{turma}}" readonly> 
+                        
+                        <div class="btn-group">
+                            <button type="submit" class="btn-submit">Selecionar</button>
+                        </div><br>
+                    </div>
+    
+                    <table id="notas-table">
+                        <thead>
+                            <tr>
+                                <th>Nome do Aluno</th>
+                                <th>Nota</th>
+                                <th>Ações</th>
+                                <th>Trimestre</th>
+                                <th>Tipo Prova</th>
+                            </tr>
+                        </thead>
+                        <tbody id="notas-body">
+                            {% for matricula in matriculas %}
+                                {% if turma == matricula.turma_id.nome %}
+                                    {% for nota in notas %}
+                                        {% if matricula.aluno_id.nome == nota.aluno_id.nome and disciplina == nota.disciplina_id.nome %}
+                                            <tr>
+                                                <td>{{ matricula.aluno_id.nome }}</td>
+                                                <td>
+                                                    <a href="{% url 'update-nota' nota.pk %}" class='btn' style="{% if nota.valor < 10 %}color: red;{% endif %}">{{ nota.valor }}</a> <br>
+                                                </td>
+                                                <td>
+                                                    <a href="{% url 'delete-nota' nota.pk %}" class='btn' style="color: red;">Apagar Nota</a>
+                                                    <br>
+                                                </td>
+                                                <td>{{ nota.trimestre }}</td>
+                                                <td>{{ nota.tipo_prova }}</td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </form>
+                
+                <a onclick="window.history.back()" class="logout-btn">
+                    <span class="material-icons-sharp">west</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <script src="jquery-3.7.1.min.js"></script>
+
+    
+    <script>
+        document.getElementById('trimestre').addEventListener('change', function() {
+            var trimestreSelecionado = this.value;
+            var linhasNotas = document.querySelectorAll('#notas-table tbody tr');
+            
+            linhasNotas.forEach(function(linhaNota) {
+                var textoTrimestre = linhaNota.querySelector('td:nth-child(4)').textContent.trim();
+                if (trimestreSelecionado === 'Todos' || textoTrimestre === trimestreSelecionado) {
+                    linhaNota.style.display = 'table-row';
+                } else {
+                    linhaNota.style.display = 'none';
+                }
+            });
+        });
+    </script>
+    <script>
+        function hoje(){
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const todayString = `${year}-${month}-${day}`;
+
+    document.getElementById('dataAtual').value = todayString;
+}
+
+window.onload = hoje;
+    </script>
+</body>
+</html>

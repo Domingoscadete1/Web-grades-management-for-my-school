@@ -1,0 +1,39 @@
+.create-user{
+    width: clamp(200px, 50%, 660px);
+    height: 480px;
+    position: absolute;
+    margin-left: 15%;
+    margin-top: 100px;
+    top: 0;
+    background-color: beige;
+    border-radius: 18px;
+    padding: 20px;
+
+}
+.close-create-user{
+    display: none;
+}
+
+.show-create-user{
+    display: block;
+}
+
+
+.modal-header{
+    display: flex;
+    justify-content: space-between;
+}
+
+.close-modal{
+    color: #fff;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.moda-body{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
